@@ -19,8 +19,6 @@ import java.awt.event.KeyListener;
 
 
 public class GameLogic {
-    private static int xx;
-    private static int yy;
     ArrayList<Obstacle> obstacles = new ArrayList<>();
     ArrayList<DesignStuff> others = new ArrayList<>();
     ArrayList<Coin> coins = new ArrayList<>();
@@ -37,10 +35,10 @@ public class GameLogic {
 
     public GameLogic() {
 
-        gameObjects.add(mainHero);
+       //gameObjects.add(mainHero);
 
-        if ((xx==0) && (yy==0)){xx=650;yy=300;}
-        mainHero.position.setBounds(xx,yy,40,64);
+        if ((mainHero.position.x==0) && (mainHero.position.y==0)){mainHero.position.setBounds(650,200,40,64);}
+
 
         MarioGraphics.alive = true; // sets mainhero alive
 
@@ -96,6 +94,7 @@ public class GameLogic {
     }
 
     public void update() {
+        System.out.println("X=" +  mainHero.position.x+" Y=" +  mainHero.position.y);
         mainHero.update(obstacles, coins, stars);
         mainHero.collision();
 
@@ -118,8 +117,7 @@ public class GameLogic {
 
             if ((e.getKeyCode() == e.VK_DOWN || e.getKeyCode() == e.VK_S)) {
                 mainHero.dy = +50;
-                System.out.println("X=" +  mainHero.position.x+" Y=" +  mainHero.position.y);
-                if ((mainHero.position.x>=3120 && mainHero.position.x<=3154)&& mainHero.position.y==254 && MarioGraphics.currentLevel==1){
+                if (((mainHero.position.x>=3120 && mainHero.position.x<=3154)&& mainHero.position.y==254) && MarioGraphics.currentLevel==1){
                     MarioGraphics.currentLevel=3;
                     GameLogic.startNewGame();
                     Main.f.addKeyListener(GameLogic.getCurrentGame().keyListener);
@@ -137,7 +135,7 @@ public class GameLogic {
             if (e.getKeyCode() == e.VK_RIGHT || e.getKeyCode() == e.VK_D) {
                 mainHero.dx = 19;
 
-                if (mainHero.position.x==1315 && mainHero.position.y==454 && MarioGraphics.currentLevel==3){
+                if ((mainHero.position.x==1315 && mainHero.position.y==454) && MarioGraphics.currentLevel==3){
                     MarioGraphics.currentLevel=1;
                     GameLogic.startNewGame();
                     Main.f.addKeyListener(GameLogic.getCurrentGame().keyListener);
