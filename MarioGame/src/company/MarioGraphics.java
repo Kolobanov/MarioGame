@@ -14,7 +14,7 @@ public class MarioGraphics extends JPanel {
     Image[] designImages;
     Image[] coinImages;
     Image[] mushroomImage;
-    boolean lookLeft = false;
+    public static boolean lookLeft = false;
     public static int count = 0;
     public static int currentLevel = 1;
 
