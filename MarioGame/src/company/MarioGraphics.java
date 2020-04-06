@@ -20,17 +20,19 @@ public class MarioGraphics extends JPanel {
 
     public static int mainHeroHeight = 100;
     public static int mainHeroWidth = 64;
+    public static int big = 0; //новое
 
     public static int coins = 0;
     public static int stars = 0;
     public static int lastCoins = 0;
     public static int lives = 3;
+    public static int zaradov=0;//новое
 
     public static boolean livesTaken = false;
     public static boolean alive = true;
 
     public MarioGraphics() {
-        obstacleImages = new Image[9];
+        obstacleImages = new Image[15];
         heroImage = new Image[8];
         coinImages = new Image[3];
         designImages = new Image[4];
@@ -61,6 +63,13 @@ public class MarioGraphics extends JPanel {
             obstacleImages[6] = ImageIO.read(new File("images/wall2.png"));
             obstacleImages[7] = ImageIO.read(new File("images/floor2.png"));
             obstacleImages[8] = ImageIO.read(new File("images/pipe3.png"));
+
+            obstacleImages[9] = ImageIO.read(new File("images/wall.png"));//новое
+            obstacleImages[10] = ImageIO.read(new File("images/mush3.png"));//новое
+            obstacleImages[11] = ImageIO.read(new File("images/flag2.png"));//новое
+            obstacleImages[12] = ImageIO.read(new File("images/pods.png"));//новое
+            obstacleImages[13] = ImageIO.read(new File("images/fire.png"));//новое
+            obstacleImages[14] = ImageIO.read(new File("images/mush2.png"));//новое
 
 
             coinImages[0] = ImageIO.read(new File("images/coin.png"));
@@ -190,6 +199,7 @@ public class MarioGraphics extends JPanel {
         g.setFont(new Font("Pixel Emulator", Font.PLAIN, 32));
         g.drawString("Level: " + currentLevel + "", 100, 100);
         g.drawString("Max coins: " + lastCoins + "", 100, 60);
+        g.drawString("Fire: " + zaradov + "", 100, 140); //новое
 
         g.drawImage(designImages[3],
                 900,

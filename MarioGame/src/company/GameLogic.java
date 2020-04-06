@@ -35,10 +35,10 @@ public class GameLogic {
 
     public GameLogic() {
 
-       //gameObjects.add(mainHero);
+        //gameObjects.add(mainHero);
 
         if ((mainHero.position.x==0) && (mainHero.position.y==0)){mainHero.position.setBounds(650,200,40,64);}
-
+        mainHero.fireging=0;
 
         MarioGraphics.alive = true; // sets mainhero alive
 
@@ -57,25 +57,33 @@ public class GameLogic {
             e.printStackTrace();
         }
 
-       //новое сделали-<
+        //новое сделали-<
 
 
         for(int j = 0; j < map.length; j++) {
             for (int i = 0; i < map[0].length(); i++) {
-                if (map[j].charAt(i) == 'm') obstacles.add(new Obstacle(i*40, j*40, 40, 40, 5));  // star coins
+                if (map[j].charAt(i) == 'm') obstacles.add(new Obstacle(i*40, j*40, 40, 40, 5));  // mush
                 if (map[j].charAt(i) == 's') stars.add(new Coin(i*40, j*40, 40, 40, 1));  // star coins
                 if (map[j].charAt(i) == 'h' && !MarioGraphics.livesTaken) lives.add(new Coin(i*40, j*40, 40, 40, 2));  // lives
                 if (map[j].charAt(i) == '1') obstacles.add(new Obstacle(i*40, j*40, 40, 40, 0)); // floor
-                 if (map[j].charAt(i) == 'e') obstacles.add(new Obstacle(i*40, j*40, 40, 40, 7)); // floor
+                if (map[j].charAt(i) == 'g') obstacles.add(new Obstacle(i*40, j*40, 40, 40, 9)); // floor go
+                if (map[j].charAt(i) == 'j') obstacles.add(new Obstacle(i*40, j*40, 40, 40, 10));  // mush3 //новое
+                if (map[j].charAt(i) == 'k') others.add(new DesignStuff(i*40, j*40, 40, 320, 4)); // flag //новое
+                if (map[j].charAt(i) == 'l') obstacles.add(new Obstacle(i*40, j*40, 60, 80, 11));  // flag2 //новое
+                if (map[j].charAt(i) == 'p') obstacles.add(new Obstacle(i*40, j*40, 40, 40, 12));  // pods //новое
+                if (map[j].charAt(i) == 'f') obstacles.add(new Obstacle(i*40, j*40, 40, 40, 13));  // fire //новое
+                if (map[j].charAt(i) == 'z') obstacles.add(new Obstacle(i*40, j*40, 40, 40, 14));  // mush3 //новое
+
+                if (map[j].charAt(i) == 'e') obstacles.add(new Obstacle(i*40, j*40, 40, 40, 7)); // floor
                 if (map[j].charAt(i) == '2') others.add(new DesignStuff(i*40, j*40, 50, 50, 0)); // clouds
                 if (map[j].charAt(i) == '3') obstacles.add(new Obstacle(i*40, j*40, 40, 40, 1)); // wall
-                 if (map[j].charAt(i) == 'w') obstacles.add(new Obstacle(i*40, j*40, 40, 40, 6)); // wall
+                if (map[j].charAt(i) == 'w') obstacles.add(new Obstacle(i*40, j*40, 40, 40, 6)); // wall
                 if (map[j].charAt(i) == '4') obstacles.add(new Obstacle(i*40, j*40, 40, 40, 2)); //box
                 if (map[j].charAt(i) == '5') obstacles.add(new Obstacle(i*40, j*40, 60, 60, 3)); // pipe head
                 if (map[j].charAt(i) == '6') others.add(new DesignStuff(i*40, j*40, 60, 60, 1)); //bush
                 if (map[j].charAt(i) == '7') coins.add(new Coin(i*40, j*40, 40, 40, 0)); // coins
                 if (map[j].charAt(i) == '8') obstacles.add(new Obstacle(i*40, j*40, 60, 60, 4)); // pipe base
-                 if (map[j].charAt(i) == 'q') obstacles.add(new Obstacle(i*40, j*40, 60, 60, 8)); // pipe base
+                if (map[j].charAt(i) == 'q') obstacles.add(new Obstacle(i*40, j*40, 60, 60, 8)); // pipe base
                 if (map[j].charAt(i) == '9') others.add(new DesignStuff(i*40, j*40, 400, 400, 2)); //castle
             }
         }
@@ -94,7 +102,7 @@ public class GameLogic {
     }
 
     public void update() {
-        System.out.println("X=" +  mainHero.position.x+" Y=" +  mainHero.position.y);
+        //System.out.println("X=" +  mainHero.position.x+" Y=" +  mainHero.position.y);
         mainHero.update(obstacles, coins, stars);
         mainHero.collision();
 
@@ -127,6 +135,7 @@ public class GameLogic {
 
             if ((e.getKeyCode() == e.VK_UP || e.getKeyCode() == e.VK_W) && !mainHero.jumping) {
                 mainHero.dy = -50;
+                if (mainHero.biging) mainHero.dy = -70;
                 mainHero.jumping = true;
             }
             if (e.getKeyCode() == e.VK_LEFT || e.getKeyCode() == e.VK_A) {
@@ -142,10 +151,22 @@ public class GameLogic {
                 }
             }
 
+            if (e.getKeyCode() == e.VK_SPACE) {//новое
+                if (MarioGraphics.zaradov>0) {
+                    MarioGraphics.zaradov--;
+
+                    mainHero.fire=true;
+                    if (MarioGraphics.lookLeft) {mainHero.fireging=-8;}
+                    else { mainHero.fireging=8;}
+                }
+            }
+
             if (e.getKeyCode() == e.VK_R) {
                 if(company.MarioGraphics.lives > 0) {
                     GameLogic.startNewGame();
                     Main.f.addKeyListener(GameLogic.getCurrentGame().keyListener);
+                    MainHero.biging=false;
+                    MarioGraphics.big=0;
                     MarioGraphics.coins = 0;
                     MarioGraphics.stars = 0;
                     MainHero.levelChanged = false;
@@ -173,6 +194,7 @@ public class GameLogic {
                 GameLogic.startNewGame();
                 Main.f.addKeyListener(GameLogic.getCurrentGame().keyListener);
             }
+
         }
 
         @Override
